@@ -7,6 +7,10 @@ function OK(res, data, responseCode, responseMessage){
         commonResponse.responseMessage = responseMessage;
     }
     commonResponse.data = data;
+    // console.log('common response')
+    // console.log(commonResponse)
+    // console.log('data')
+    // console.log(commonResponse.data)
     res.json(commonResponse);
 }
 

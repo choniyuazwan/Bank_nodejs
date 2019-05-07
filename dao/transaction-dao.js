@@ -1,11 +1,19 @@
-const {Customer, Transaction} = require('../db/sequelize');
+const {Customer, Transaction, TransactionType, AccountCredit, AccountDebit} = require('../db/sequelize');
 
-function getList(callback){
+function getList(callback, filter){
     Transaction.findAll({
-        include: [{
-            model: Customer,
-            as: 'customer',
-        }]
+        include: [ {
+            model: TransactionType
+        }, {
+            model: AccountDebit,
+            as: 'accountDebit',
+        }, {
+            model: AccountCredit,
+            as: 'accountCredit'
+        }, {
+            model: Customer
+        }],
+        where : filter
     }).then(
         (transaction)=>{
             callback(null, transaction);
@@ -13,20 +21,4 @@ function getList(callback){
     )
 }
 
-function getListByCif(id, callback){
-    Transaction.findAll({
-        where: {
-            cif: id
-        },
-        include: [{
-            model: Customer,
-            as: 'customer',
-        }]
-    }).then(
-        (transaction)=>{
-            callback(null, transaction);
-        }
-    )
-}
-
-module.exports = {getList, getListByCif};
+module.exports = {getList};

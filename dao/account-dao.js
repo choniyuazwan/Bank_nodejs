@@ -1,26 +1,13 @@
 const {Customer, Account} = require('../db/sequelize');
-function getList(callback){
-    Account.findAll({
-        include: [{
-            model: Customer,
-            as: 'customer',
-        }]
-    }).then(
-        (accounts)=>{
-            callback(null, accounts);
-        }
-    )
-}
+function getList(callback, filter){
+    console.log(`filter : ${JSON.stringify(filter)}`);
 
-function getListByCif(id, callback){
     Account.findAll({
-        where: {
-            cif: id
-        },
         include: [{
             model: Customer,
             as: 'customer',
-        }]
+        }],
+        where : filter
     }).then(
         (accounts)=>{
             callback(null, accounts);
@@ -76,4 +63,4 @@ function remove(id, callback){
     )
 }
 
-module.exports = {getList, getById, insert, update, remove, getListByCif};
+module.exports = {getList, getById, insert, update, remove};

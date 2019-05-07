@@ -38,6 +38,19 @@ function insert(data, callback){
     )
 }
 
+
+function login(callback, filter){
+    console.log(`filter: ${JSON.stringify(filter)}`)
+    Customer.findOne({
+        where: filter
+    }).then(
+        (customers)=>{
+            callback(null, customers);
+        }
+    )
+}
+
+
 function update(id, data, callback){
     Customer.update({
         name: data.name,
@@ -61,4 +74,4 @@ function remove(id, callback){
     )
 }
 
-module.exports = {getList, getById, insert, update, remove};
+module.exports = {getList, getById, insert, update, remove, login};

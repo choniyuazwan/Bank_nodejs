@@ -5,25 +5,18 @@ const resp = require('../models/response');
 const TransactionRoute = express.Router();
 
 TransactionRoute.get('/transactions', (req, res)=>{
+    let filter = {};
+    
+    if(req.query.cif){
+        filter.cif = req.query.cif;
+    }
     transactionDao.getList(function(error, result){
         if(error){
             resp.notOk(res, error);
         }else{
             resp.ok(res, result);
         }
-    });
-})
-
-TransactionRoute.get('/customer/:cif/transactions', (req, res)=>{
-    transactionDao.getListByCif(req.params['cif'], function(error, result){
-        if(error){
-            resp.notOk(res, error);
-        }else if(result){
-            resp.ok(res, result);
-        }else{
-            resp.notFound(res, req.params.cif);
-        }
-    });
+    }, filter);
 })
 
 module.exports = TransactionRoute;

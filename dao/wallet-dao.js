@@ -1,11 +1,12 @@
 const {Customer, Wallet} = require('../db/sequelize');
 
-function getList(callback){
+function getList(callback, filter){
     Wallet.findAll({
         include: [{
             model: Customer,
             as: 'customer',
-        }]
+        }],
+        where : filter
     }).then(
         (wallets)=>{
             callback(null, wallets);

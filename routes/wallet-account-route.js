@@ -7,8 +7,8 @@ const WalletAccountRoute = express.Router();
 WalletAccountRoute.get('/walletaccounts', (req, res)=>{
     let filter = {};
     
-    if(req.query.address){
-        filter.address = req.query.address;
+    if(req.query.cif){
+        filter.cif = req.query.cif;
     }
     walletAccountDao.getList(function(error, result){
         if(error){

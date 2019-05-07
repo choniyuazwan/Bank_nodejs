@@ -41,6 +41,23 @@ CustomerRoute.post('/customer', (req, res, next) => {
     });
 });
 
+CustomerRoute.post('/customer/login', (req, res)=>{
+    let filter = {}
+
+    filter.username = req.body.username
+    filter.password = req.body.password
+
+    customerDao.login(function(error, result){
+        if(error){
+            resp.notOk(res, error);
+        }else{
+            // console.log('hasil result')
+            // console.log(result)
+            resp.ok(res, result);
+        }
+    }, filter);
+})
+
 CustomerRoute.put('/customer/:cif', (req, res, next) => {
     customerDao.update(req.params.cif, req.body, function(error, result){
         if(error){
